@@ -5,8 +5,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 
+import com.google.android.exoplayer2.ExoPlayer;
 import com.google.android.exoplayer2.MediaItem;
+import com.google.android.exoplayer2.Player;
 import com.google.android.exoplayer2.SimpleExoPlayer;
+import com.google.android.exoplayer2.trackselection.DefaultTrackSelector;
 import com.google.android.exoplayer2.ui.PlayerView;
 import com.google.android.exoplayer2.util.Util;
 
@@ -28,7 +31,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initializePlayer() {
-        player = new SimpleExoPlayer.Builder(this).build();
+        DefaultTrackSelector trackSelector = new DefaultTrackSelector(this);
+        trackSelector.setParameters(
+                trackSelector
+                        .buildUponParameters()
+                        .setMaxVideoSizeSd()
+        );
+        player = new SimpleExoPlayer.Builder(this)
+                .setTrackSelector(trackSelector).build();
         List<Integer> videoPlaylist =  Arrays.asList(
                 R.string.horses_url,
                 R.string.magic_tree,
@@ -60,6 +70,12 @@ public class MainActivity extends AppCompatActivity {
         hideSystemUI();
         if (Util.SDK_INT < 24 || player == null) initializePlayer();
     }
+
+    @Override
+    public  void  onStop() {
+        super.onStop();
+        releasePlayer();
+    }
     private void hideSystemUI() {
         playerView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LOW_PROFILE
                 | View.SYSTEM_UI_FLAG_FULLSCREEN
@@ -68,6 +84,7 @@ public class MainActivity extends AppCompatActivity {
                 | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
                 | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
     }
+
     private void releasePlayer() {
         if (player != null) {
             playWhenReady = player.getPlayWhenReady();
