@@ -1,4 +1,8 @@
 <resources>
     <string name="app_name">Exoplayer</string>
     <string name="soundHelix_url">https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3</string>
+    <string name="red_cabbage_url">https://images.all-free-download.com/footage_preview/mp4/red_cabbage_6891555.mp4</string>
+    <string name="horses_url">https://images.all-free-download.com/footage_preview/mp4/horses_6891528.mp4</string>
+    <string name="magic_tree">https://images.all-free-download.com/footage_preview/mp4/magic_tree_6891547.mp4</string>
+    <string name="ants_url">https://images.all-free-download.com/footage_preview/mp4/ants_6891507.mp4</string>
 </resources>

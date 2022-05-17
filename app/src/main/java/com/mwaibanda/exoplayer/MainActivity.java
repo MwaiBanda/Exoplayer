@@ -10,6 +10,10 @@ import com.google.android.exoplayer2.SimpleExoPlayer;
 import com.google.android.exoplayer2.ui.PlayerView;
 import com.google.android.exoplayer2.util.Util;
 
+import java.util.Arrays;
+import java.util.List;
+import java.util.Random;
+
 public class MainActivity extends AppCompatActivity {
     private PlayerView playerView;
     private SimpleExoPlayer player;
@@ -25,8 +29,18 @@ public class MainActivity extends AppCompatActivity {
 
     private void initializePlayer() {
         player = new SimpleExoPlayer.Builder(this).build();
-        MediaItem mediaItem = MediaItem.fromUri(getString(R.string.soundHelix_url));
+        List<Integer> videoPlaylist =  Arrays.asList(
+                R.string.horses_url,
+                R.string.magic_tree,
+                R.string.ants_url
+        );
+
+        MediaItem mediaItem = MediaItem.fromUri(getString(R.string.red_cabbage_url));
         player.setMediaItem(mediaItem);
+        videoPlaylist.forEach(videoID -> {
+            player.addMediaItem(MediaItem.fromUri(getString(videoID)));
+        });
+
         playerView.setPlayer(player);
         player.setPlayWhenReady(playWhenReady);
         player.seekTo(currentWindow, playbackPosition);
